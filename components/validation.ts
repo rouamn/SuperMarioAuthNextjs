@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const PARIS_COORDS = { lat: 48.8566, lon: 2.3522 };
 
 // Calculate distance between two coordinates in km using the Haversine formula
@@ -48,16 +49,17 @@ const validateBirthDate = (birthDate: string) => {
 
   birthDateObj.setHours(0, 0, 0, 0);
 
+
   if (birthDateObj > today) {
-    return false;
+    return false; 
   }
 
   const minAgeDate = new Date();
   minAgeDate.setFullYear(today.getFullYear() - 10);
 
-  // Check if the user is younger than 10 years
+
   if (birthDateObj > minAgeDate) {
-    return false; // Invalid if user is less than 10 years old
+    return false;
   }
 
   return true;
@@ -68,7 +70,7 @@ const validate = async (
   firstName: string,
   lastName: string,
   birthDate: string,
-  phone: string,
+  phone: string | null,
   address: string
 ) => {
   const newErrors: { [key: string]: string } = {};
@@ -77,8 +79,6 @@ const validate = async (
   const requiredMessage = "is required";
   const invalidDOBMessage =
     "Invalid date of birth. You must be at least 10 years old, and the date cannot be in the future.";
-  const invalidPhoneMessage =
-    "Invalid phone number. It should match the format for +216 or +33.";
   const invalidAddressMessage = "The address must be within 50 km of Paris.";
 
   // First and Last Name validation
@@ -88,6 +88,11 @@ const validate = async (
   // Date of birth validation
   if (!birthDate || !validateBirthDate(birthDate)) {
     newErrors.birthDate = invalidDOBMessage;
+  }
+
+  // Phone number validation (must not be null)
+  if (phone === null || phone === "") {
+    newErrors.phone = `Phone number ${requiredMessage}`;
   }
 
   // Address validation
