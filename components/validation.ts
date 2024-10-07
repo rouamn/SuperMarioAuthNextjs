@@ -1,8 +1,8 @@
 import axios from 'axios';
-
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 const PARIS_COORDS = { lat: 48.8566, lon: 2.3522 };
 
-// Calculate distance between two coordinates in km using Haversine formula
+// Calculate distance between two coordinates in km using the Haversine formula
 const haversineDistance = (coords1: { lat: number; lon: number }, coords2: { lat: number; lon: number }) => {
     const toRad = (value: number) => (value * Math.PI) / 180;
     const R = 6371; // Radius of the Earth in km
@@ -35,22 +35,63 @@ const validateAddress = async (address: string) => {
     }
 };
 
-// Validate input fields
+
+
+
+
+// Validate date of birth
+const validateBirthDate = (birthDate: string) => {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    
+    // Ensure the birth date doesn't have a time portion
+    birthDateObj.setHours(0, 0, 0, 0);
+
+    // Check if the birth date is in the future
+    if (birthDateObj > today) {
+        return false; // Invalid if the birth date is in the future
+    }
+
+    // Calculate minimum birth date for a 10-year-old
+    const minAgeDate = new Date();
+    minAgeDate.setFullYear(today.getFullYear() - 10);
+
+    // Check if the user is younger than 10 years
+    if (birthDateObj > minAgeDate) {
+        return false; // Invalid if user is less than 10 years old
+    }
+
+    return true; // Birth date is valid
+};
+
+// Validate all fields
 const validate = async (firstName: string, lastName: string, birthDate: string, phone: string, address: string) => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!firstName) newErrors.firstName = "First name is required";
-    if (!lastName) newErrors.lastName = "Last name is required";
-    if (!birthDate) newErrors.birthDate = "Date of birth is required";
-    if (!phone || !/^\d{6,15}$/.test(phone)) newErrors.phone = "Invalid phone number";
+    // Error messages
+    const requiredMessage = "is required";
+    const invalidDOBMessage = "Invalid date of birth. You must be at least 10 years old, and the date cannot be in the future.";
+    const invalidPhoneMessage = "Invalid phone number. It should match the format for +216 or +33.";
+    const invalidAddressMessage = "The address must be within 50 km of Paris.";
 
-    // Validate address
+    // First and Last Name validation
+    if (!firstName) newErrors.firstName = `First name ${requiredMessage}`;
+    if (!lastName) newErrors.lastName = `Last name ${requiredMessage}`;
+
+    // Date of birth validation
+    if (!birthDate || !validateBirthDate(birthDate)) {
+        newErrors.birthDate = invalidDOBMessage;
+    }
+
+ 
+
+    // Address validation
     if (!address) {
-        newErrors.address = "Address is required";
+        newErrors.address = `Address ${requiredMessage}`;
     } else {
         const isValidAddress = await validateAddress(address);
         if (!isValidAddress) {
-            newErrors.address = "L'adresse doit être située à moins de 50 km de Paris.";
+            newErrors.address = invalidAddressMessage;
         }
     }
 

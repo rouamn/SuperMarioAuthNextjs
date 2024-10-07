@@ -50,6 +50,11 @@ export default function Home() {
           onClick={handleSignIn}
           className="px-6 py-3 mt-4 font-semibold text-white bg-green-500 rounded-lg shadow-lg hover:bg-green-600 transition duration-200 transform hover:scale-105"
         >
+          <img 
+            src="https://img.icons8.com/color/48/000000/google-logo.png" // Replace with your logo URL
+            alt="Google Logo"
+            className="inline-block mr-2" // Ensure some space between logo and text
+          />
           Sign in with Google
         </button>
       )}
@@ -57,6 +62,9 @@ export default function Home() {
       
       <footer className="mt-8 text-gray-200 text-sm">
         <p>© {new Date().getFullYear()} SuperMarioAuth. All rights reserved.</p>
+        <p className="text-xs mt-2">
+          <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/17949/logo-google">Logo Google</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a>
+        </p>
       </footer>
 
       <style jsx>{`
