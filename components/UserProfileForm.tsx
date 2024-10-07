@@ -15,9 +15,13 @@ interface User {
 
 interface UserProfileFormProps {
   user: User | undefined;
+  isDarkMode: boolean;
 }
 
-const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
+const UserProfileForm: React.FC<UserProfileFormProps> = ({
+  user,
+  isDarkMode,
+}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -93,7 +97,11 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex space-x-4">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            className={`block text-sm font-medium ${
+              isDarkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             First Name
           </label>
           <input
@@ -101,14 +109,22 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
             placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="w-full mt-1 border rounded-lg p-2"
+            className={`w-full mt-1 border rounded-lg p-2 ${
+              isDarkMode
+                ? "bg-gray-800 text-gray-300"
+                : "bg-white text-gray-800"
+            }`}
           />
           {errors.firstName && (
             <p className="text-red-600 text-sm">{errors.firstName}</p>
           )}
         </div>
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            className={`block text-sm font-medium ${
+              isDarkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             Last Name
           </label>
           <input
@@ -116,7 +132,11 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="w-full mt-1 border rounded-lg p-2"
+            className={`w-full mt-1 border rounded-lg p-2 ${
+              isDarkMode
+                ? "bg-gray-800 text-gray-300"
+                : "bg-white text-gray-800"
+            }`}
           />
           {errors.lastName && (
             <p className="text-red-600 text-sm">{errors.lastName}</p>
@@ -124,30 +144,48 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label
+          className={`block text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
+          Email
+        </label>
         <input
           type="email"
           value={email}
           readOnly
-          className="w-full mt-1 border rounded-lg p-2 bg-gray-100 cursor-not-allowed"
+          className={`w-full mt-1 border rounded-lg p-2 ${
+            isDarkMode ? "bg-gray-800 text-gray-300" : "bg-white text-gray-800"
+          } cursor-not-allowed`}
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          className={`block text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
           Date of Birth
         </label>
         <input
           type="date"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
-          className="w-full mt-1 border rounded-lg p-2"
+          className={`w-full mt-1 border rounded-lg p-2 ${
+            isDarkMode ? "bg-gray-800 text-gray-300" : "bg-white text-gray-800"
+          }`}
         />
         {errors.birthDate && (
           <p className="text-red-600 text-sm">{errors.birthDate}</p>
         )}
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          className={`block text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
           Address
         </label>
         <input
@@ -155,14 +193,20 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="w-full mt-1 border rounded-lg p-2"
+          className={`w-full mt-1 border rounded-lg p-2 ${
+            isDarkMode ? "bg-gray-800 text-gray-300" : "bg-white text-gray-800"
+          }`}
         />
         {errors.address && (
           <p className="text-red-600 text-sm">{errors.address}</p>
         )}
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          className={`block text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
           Phone Number
         </label>
         <div className="flex">
@@ -170,7 +214,11 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ user }) => {
             country={"tn"}
             value={phone}
             onChange={(phone) => setPhone(phone)}
-            inputClass="border rounded-lg p-2 mt-1 flex-1"
+            inputClass={`border rounded-lg p-2 mt-1 flex-1 ${
+              isDarkMode
+                ? "bg-gray-800 text-gray-300"
+                : "bg-white text-gray-800"
+            }`}
           />
         </div>
         {errors.phone && <p className="text-red-600 text-sm">{errors.phone}</p>}
