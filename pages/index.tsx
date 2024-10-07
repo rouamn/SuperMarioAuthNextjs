@@ -7,36 +7,40 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const handleSignIn = async () => {
-    const result = await signIn("google", { 
+    const result = await signIn("google", {
       redirect: false,
-      prompt: "select_account", 
+      prompt: "select_account",
     });
     if (result?.error) {
       setError("Failed to sign in. Please try again.");
     } else if (result?.ok) {
-      window.location.href = '/'; 
+      window.location.href = "/";
     }
   };
 
   const handleSignOut = async () => {
-    await signOut({ redirect: false }); 
-    setError(""); 
-    window.location.href = '/'; 
+    await signOut({ redirect: false });
+    setError("");
+    window.location.href = "/";
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-70"></div>
       <div className="absolute inset-0 animated-background"></div>
-      
-      <h1 className="text-5xl font-extrabold text-white mb-8 opacity-90 transition-opacity duration-500 hover:opacity-100">Welcome to SuperMarioAuth</h1>
+
+      <h1 className="text-5xl font-extrabold text-white mb-8 opacity-90 transition-opacity duration-500 hover:opacity-100">
+        Welcome to SuperMarioAuth
+      </h1>
       <p className="text-xl text-gray-200 mb-8 opacity-90 transition-opacity duration-500 hover:opacity-100">
         Your gateway to a seamless authentication experience.
       </p>
-      
+
       {session ? (
         <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-xl transition-shadow duration-300 ease-in-out hover:shadow-2xl animate-fade-in">
-          <h2 className="text-3xl font-bold mb-4 text-blue-600">Hello, {session.user?.name}!</h2>
+          <h2 className="text-3xl font-bold mb-4 text-blue-600">
+            Hello, {session.user?.name}!
+          </h2>
           <UserProfile />
           <button
             onClick={handleSignOut} // Use the updated sign out function
@@ -50,7 +54,7 @@ export default function Home() {
           onClick={handleSignIn}
           className="px-6 py-3 mt-4 font-semibold text-white bg-green-500 rounded-lg shadow-lg hover:bg-green-600 transition duration-200 transform hover:scale-105"
         >
-          <img 
+          <img
             src="https://img.icons8.com/color/48/000000/google-logo.png" // Replace with your logo URL
             alt="Google Logo"
             className="inline-block mr-2" // Ensure some space between logo and text
@@ -58,12 +62,28 @@ export default function Home() {
           Sign in with Google
         </button>
       )}
-      {error && <div className="mt-4 text-red-400 text-lg font-semibold">{error}</div>}
-      
+      {error && (
+        <div className="mt-4 text-red-400 text-lg font-semibold">{error}</div>
+      )}
+
       <footer className="mt-8 text-gray-200 text-sm">
         <p>© {new Date().getFullYear()} SuperMarioAuth. All rights reserved.</p>
         <p className="text-xs mt-2">
-          <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/17949/logo-google">Logo Google</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://icons8.com/icon/17949/logo-google"
+          >
+            Logo Google
+          </a>{" "}
+          icon by{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://icons8.com"
+          >
+            Icons8
+          </a>
         </p>
       </footer>
 
@@ -81,7 +101,12 @@ export default function Home() {
         }
         .animated-background {
           animation: background-animation 8s ease infinite;
-          background: linear-gradient(270deg, rgba(255, 0, 150, 0.1), rgba(0, 204, 255, 0.1), rgba(255, 0, 150, 0.1));
+          background: linear-gradient(
+            270deg,
+            rgba(255, 0, 150, 0.1),
+            rgba(0, 204, 255, 0.1),
+            rgba(255, 0, 150, 0.1)
+          );
           background-size: 400% 400%;
         }
         @keyframes fade-in {
